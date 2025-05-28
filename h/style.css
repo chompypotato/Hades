@@ -166,7 +166,7 @@ body {
 
 .settings-icon {
    color: white;
-   font-size: 24px;
+   font-size: 16px;
    margin-right: 10px;
    transition: text-shadow 0.3s ease-in-out, transform 0.3s ease-in-out;
 }
