@@ -1,0 +1,206 @@
+:root {
+   --main-bg: #121212;
+   --text-color: #ffdddd;
+   --highlight: #ff4444;
+   --highlight-light: #ff8888;
+   --highlight-shadow: rgba(255, 68, 68, 0.8);
+   --highlight-shadow-strong: rgba(255, 68, 68, 1);
+   --placeholder-color: #ffaaaa;
+}
+
+/* General styling */
+body {
+   background-color: var(--main-bg);
+   color: var(--text-color);
+   font-family: 'Exo', sans-serif;
+   margin: 0;
+   padding: 0;
+}
+
+#content, #content2 {
+   height: auto;
+   min-height: 100vh;
+   display: flex;
+   flex-direction: column;
+   text-align: center;
+   font-family: 'Exo', sans-serif;
+}
+
+#content {
+   justify-content: center;
+   align-items: center;
+   gap: 20px;
+}
+
+#content2 {
+   justify-content: flex-start;
+}
+
+/* Cool Search Bar */
+.input-container {
+   position: relative;
+   width: 100vw;
+   max-width: 500px;
+}
+
+.input {
+   color: #fff;
+   font-size: 1rem;
+   background-color: rgba(255, 0, 0, 0.1);
+   width: 100%;
+   box-sizing: border-box;
+   padding: 12px 20px 12px 50px;
+   border: 2px solid transparent;
+   border-radius: 25px;
+   transition: all 0.3s ease;
+   outline: none;
+   font-family: 'Exo', sans-serif;
+}
+
+.input:hover,
+.input:focus {
+   border-color: var(--highlight);
+   box-shadow: 0 0 10px var(--highlight);
+}
+
+.input-container .fa-search {
+   position: absolute;
+   left: 15px;
+   top: 50%;
+   transform: translateY(-50%);
+   color: var(--highlight);
+   font-size: 1.2rem;
+   pointer-events: none;
+}
+
+.input::placeholder {
+   color: var(--placeholder-color);
+   transition: all 0.3s ease;
+}
+
+.input:focus::placeholder {
+   color: var(--highlight-light);
+   opacity: 0.6;
+}
+
+/* Header Styling */
+#content h1,
+#content2 h2 {
+   font-family: "Exo", sans-serif !important;
+   transition: all 0.3s ease;
+   color: var(--text-color);
+   text-shadow: 0 0 10px var(--highlight-shadow),
+                0 0 20px var(--highlight-shadow),
+                0 0 30px var(--highlight-shadow);
+}
+
+#content h1 {
+   font-size: 96px;
+   margin-bottom: 0;
+}
+
+#content h1:hover,
+#content2 h2:hover {
+   color: white;
+   text-shadow: 0 0 20px var(--highlight-shadow),
+                0 0 40px var(--highlight-shadow-strong);
+   transform: scale(1.05);
+}
+
+#content2 h2 {
+   font-size: 50px;
+   margin: 80px 0 0 0;
+}
+
+/* Top Navigation Bar */
+.top-bar {
+   position: fixed;
+   top: 0;
+   left: 0;
+   width: 100%;
+   height: 55px;
+   backdrop-filter: blur(10px);
+   background: rgba(34, 34, 34, 0.5);
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+   padding: 0 20px;
+   z-index: 100;
+   box-sizing: border-box;
+}
+
+.left-section,
+.right-section {
+   display: flex;
+   align-items: center;
+}
+
+.left-section img {
+   height: 40px;
+   margin-right: 10px;
+}
+
+.left-section a,
+.right-section a {
+   color: white;
+   text-decoration: none;
+   transition: all 0.3s ease-in-out;
+}
+
+.left-section a {
+   font-size: 24px;
+}
+
+.left-section a:hover,
+.right-section a:hover {
+   color: white;
+   text-shadow: 0 0 10px var(--highlight-shadow),
+                0 0 20px var(--highlight-shadow),
+                0 0 30px var(--highlight-shadow);
+   transform: scale(1.1);
+}
+
+.right-section {
+   gap: 15px;
+}
+
+.settings-icon {
+   color: white;
+   font-size: 40px;
+   margin-right: 10px;
+   transition: text-shadow 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+
+.settings-icon:hover {
+   text-shadow: 0 0 10px var(--highlight-shadow),
+                0 0 20px var(--highlight-shadow-strong);
+   transform: scale(1.1);
+}
+
+.github-link,
+.vanta-link {
+   color: white;
+   position: fixed;
+   bottom: 10px;
+   z-index: 1000;
+   border-radius: 5px;
+   font-size: 16px;
+   text-decoration: none;
+   transition: all 0.3s ease;
+}
+
+.github-link {
+   right: 10px;
+}
+
+.vanta-link {
+   right: 75px;
+}
+
+.github-link:hover,
+.vanta-link:hover {
+   background: rgba(255, 255, 255, 0.3);
+   text-shadow: 0 0 10px var(--highlight-shadow),
+                0 0 20px var(--highlight-shadow-strong);
+   transform: scale(1.05);
+}
