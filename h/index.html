@@ -52,40 +52,68 @@
       <a href="https://github.com/chompypotato/Hades/" class="github-link">Github</a>
       <a href="https://www.vantajs.com/?effect=fog" class="vanta-link">Vantajs</a>
       <script>
-         async function fetchWeather() {
-             try {
-                 const ipResponse = await fetch('https://ipapi.co/json/');
-                 const ipData = await ipResponse.json();
-                 const lat = ipData.latitude;
-                 const lon = ipData.longitude;
-                 const country = ipData.country;
-                 const unit = country === 'US' ? 'imperial' : 'metric';
-                 
-                 const apiKey = 'bd5e378503939ddaee76f12ad7a97608';
-                 const weatherResponse = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=${unit}&appid=${apiKey}`);
-                 const weatherData = await weatherResponse.json();
-                 const temperature = Math.round(weatherData.main.temp);
-                 const weather = weatherData.weather[0].description;
-                 
-                 document.getElementById('weather-time').innerHTML = `${temperature}°${unit === 'imperial' ? 'F' : 'C'} - ${weather}`;
-             } catch (error) {
-                 console.error('Error fetching weather:', error);
-             }
-         }
-         
-         function updateTime() {
-             const now = new Date();
-             const timeString = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-             const dateString = now.toLocaleDateString();
-             const weatherTimeElem = document.getElementById('weather-time');
-             if (weatherTimeElem) {
-                 weatherTimeElem.innerHTML = `${weatherTimeElem.innerHTML.split('|')[0]} | ${dateString} ${timeString}`;
-             }
-         }
-         
-         fetchWeather();
-         setInterval(updateTime, 1000);
-      </script>
+   async function fetchWeather() {
+       try {
+           // Get user's approximate location
+           const ipResponse = await fetch('https://ipapi.co/json/');
+           const ipData = await ipResponse.json();
+           const lat = ipData.latitude;
+           const lon = ipData.longitude;
+
+           // Call Open-Meteo API
+           const weatherResponse = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true`);
+           const weatherData = await weatherResponse.json();
+
+           const temperature = Math.round(weatherData.current_weather.temperature);
+           const weatherCode = weatherData.current_weather.weathercode;
+
+           // Weather code descriptions (very basic mapping)
+           const weatherDescriptions = {
+               0: "Clear sky",
+               1: "Mainly clear",
+               2: "Partly cloudy",
+               3: "Overcast",
+               45: "Fog",
+               48: "Depositing rime fog",
+               51: "Light drizzle",
+               53: "Moderate drizzle",
+               55: "Dense drizzle",
+               61: "Light rain",
+               63: "Moderate rain",
+               65: "Heavy rain",
+               71: "Light snow",
+               73: "Moderate snow",
+               75: "Heavy snow",
+               80: "Light showers",
+               81: "Moderate showers",
+               82: "Violent showers",
+               95: "Thunderstorm",
+               96: "Thunderstorm with hail"
+           };
+
+           const description = weatherDescriptions[weatherCode] || "Unknown";
+
+           document.getElementById('weather-time').innerHTML = `${temperature}°C - ${description}`;
+       } catch (error) {
+           console.error('Error fetching weather:', error);
+       }
+   }
+
+   function updateTime() {
+       const now = new Date();
+       const timeString = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+       const dateString = now.toLocaleDateString();
+       const weatherTimeElem = document.getElementById('weather-time');
+       if (weatherTimeElem) {
+           const parts = weatherTimeElem.innerHTML.split('|')[0]; // avoid duplicating time
+           weatherTimeElem.innerHTML = `${parts} | ${dateString} ${timeString}`;
+       }
+   }
+
+   fetchWeather();
+   setInterval(updateTime, 1000);
+</script>
+
       <script src="uv/uv.bundle.js" charset="UTF-8" defer></script>
       <script src="uv/uv.config.js" charset="UTF-8" defer></script>
       <script src="register-sw.js" charset="UTF-8" defer></script>
